@@ -1,17 +1,14 @@
 import { useLocalSearchParams } from 'expo-router'
 import { useState } from 'react'
 import { 
-  FlatList,
   Image,
-  Pressable,
-  Text, 
   View, 
   useWindowDimensions,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { styles } from '../styles'
 
 import Hearts from '../components/Hearts'
+import OptionFlag from '../components/OptionCountryName'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
 
@@ -24,6 +21,14 @@ const CountryNameQuiz = () => {
   const params = useLocalSearchParams() || {}
   const quiz = JSON.parse(params.quiz || []) 
   const isQuizDone = numOfIncorrectSelections >= 3 || quiz[currentIndex] === undefined
+
+  const updateNumOfIncorrectSelections = () => {
+    if (numOfIncorrectSelections === 2) {
+      setTimeout(() => setNumOfIncorrectSelections(3), 1200)
+    } else {
+      setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
+    }
+  }
 
   return (
     <View
@@ -51,56 +56,50 @@ const CountryNameQuiz = () => {
               <ProgressBar progress={currentIndex / quiz.length} />
             </View>
             <View style={{ flex: 4 }}>
-              <FlatList
-                data={quiz[currentIndex]?.choices}
-                horizontal={false}  
-                keyExtractor={c => c.name}
-                numColumns={2}
-                renderItem={({ item: choice }) => {
-                  const choiceStyle = {}
-                  const isChoiceSelected = choiceIdsSelected.includes(choice.id)
-                  if (isChoiceSelected) {
-                    const isChoiceAnswer = choice.id === quiz[currentIndex]?.answer?.id
-                    choiceStyle.borderColor = isChoiceAnswer ? 'green' : 'red'
-                    choiceStyle.borderWidth = 5
-                  }
-
-                  return (
-                    <Pressable
-                      disabled={choiceIdsSelected.includes(choice.id)}
-                      onPress={() => {
-                        setChoiceIdsSelected([...choiceIdsSelected, choice.id])
-
-                        if (choice.id === quiz[currentIndex]?.answer?.id) {
-                          setTimeout(() => {
-                            setCurrentIndex(currentIndex + 1)
-                            setChoiceIdsSelected([])
-                          }, 400)
-                        } else {
-                          setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
-                        }
-                      }}
-                      style={{ 
-                        ...choiceStyle,
-                        flex: 1, 
-                        justifyContent: 'center',
-                        height: screenHeight / 3.15,
-                        margin: screenHeight / 350,
-                        ...styles.shadow
-                      }}
-                    >
-                      <Text 
-                        style={{
-                          alignSelf: 'center',
-                          fontSize: 20,
-                        }}
-                      >
-                        {choice.name}
-                      </Text>
-                    </Pressable>
-                  )
-                }}                         
-              />
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                <OptionFlag 
+                  answer={quiz[currentIndex]?.answer}
+                  choice={quiz[currentIndex]?.choices[0]}
+                  choiceIdsSelected={choiceIdsSelected}
+                  currentIndex={currentIndex}
+                  screenHeight={screenHeight}
+                  setChoiceIdsSelected={setChoiceIdsSelected}
+                  setCurrentIndex={setCurrentIndex}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                />
+                <OptionFlag 
+                  answer={quiz[currentIndex]?.answer}
+                  choice={quiz[currentIndex]?.choices[1]}
+                  choiceIdsSelected={choiceIdsSelected}
+                  currentIndex={currentIndex}
+                  screenHeight={screenHeight}
+                  setChoiceIdsSelected={setChoiceIdsSelected}
+                  setCurrentIndex={setCurrentIndex}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                />
+              </View>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <OptionFlag 
+                  answer={quiz[currentIndex]?.answer}
+                  choice={quiz[currentIndex]?.choices[2]}
+                  choiceIdsSelected={choiceIdsSelected}
+                  currentIndex={currentIndex}
+                  screenHeight={screenHeight}
+                  setChoiceIdsSelected={setChoiceIdsSelected}
+                  setCurrentIndex={setCurrentIndex}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                />
+                <OptionFlag 
+                  answer={quiz[currentIndex]?.answer}
+                  choice={quiz[currentIndex]?.choices[3]}
+                  choiceIdsSelected={choiceIdsSelected}
+                  currentIndex={currentIndex}
+                  screenHeight={screenHeight}
+                  setChoiceIdsSelected={setChoiceIdsSelected}
+                  setCurrentIndex={setCurrentIndex}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                />
+              </View>
             </View>
           </>
         )

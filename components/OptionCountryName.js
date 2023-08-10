@@ -1,12 +1,12 @@
 import { 
-  Image,
   Pressable,
+  Text,
 } from 'react-native'
 import correctJingle from '../audio/correct.mp3'
 import incorrectJingle from '../audio/incorrect.mp3'
 import useSound from '../hooks/useSound'
 
-const OptionFlag = ({ 
+const OptionCountryName = ({ 
   answer,
   choice,
   choiceIdsSelected,
@@ -24,6 +24,7 @@ const OptionFlag = ({
       backgroundColor: '#495057',
       borderRadius: 10,
       flex: 1, 
+      justifyContent: 'center',
       margin: screenHeight / 200,
     }
     
@@ -60,13 +61,17 @@ const OptionFlag = ({
       onPress={onPress}
       style={createStyle}
     >
-      <Image             
-        resizeMode='contain'
-        source={{ uri: choice?.flag }} 
-        style={{ flex: 1 }}
-      />
+      <Text 
+        style={{
+          alignSelf: 'center',
+          color: 'white',
+          fontSize: 20,
+        }}
+      >
+        {choice.name}
+      </Text>
     </Pressable>
   )
 }
 
-export default OptionFlag
+export default OptionCountryName
