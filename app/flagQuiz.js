@@ -22,6 +22,14 @@ const FlagQuiz = () => {
   const quiz = JSON.parse(params.quiz || []) 
   const isQuizDone = numOfIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
+  const updateNumOfIncorrectSelections = () => {
+    if (numOfIncorrectSelections === 2) {
+      setTimeout(() => setNumOfIncorrectSelections(3), 1000)
+    } else {
+      setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
+    }
+  }
+
   return (
     <View
       style={{
@@ -59,22 +67,20 @@ const FlagQuiz = () => {
                   choice={quiz[currentIndex]?.choices[0]}
                   choiceIdsSelected={choiceIdsSelected}
                   currentIndex={currentIndex}
-                  numOfIncorrectSelections={numOfIncorrectSelections}
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  setNumOfIncorrectSelections={setNumOfIncorrectSelections}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[1]}
                   choiceIdsSelected={choiceIdsSelected}
                   currentIndex={currentIndex}
-                  numOfIncorrectSelections={numOfIncorrectSelections}
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  setNumOfIncorrectSelections={setNumOfIncorrectSelections}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -83,22 +89,20 @@ const FlagQuiz = () => {
                   choice={quiz[currentIndex]?.choices[2]}
                   choiceIdsSelected={choiceIdsSelected}
                   currentIndex={currentIndex}
-                  numOfIncorrectSelections={numOfIncorrectSelections}
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  setNumOfIncorrectSelections={setNumOfIncorrectSelections}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[3]}
                   choiceIdsSelected={choiceIdsSelected}
                   currentIndex={currentIndex}
-                  numOfIncorrectSelections={numOfIncorrectSelections}
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  setNumOfIncorrectSelections={setNumOfIncorrectSelections}
+                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
                 />
               </View>
             </View>

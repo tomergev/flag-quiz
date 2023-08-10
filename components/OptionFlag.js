@@ -11,11 +11,10 @@ const OptionFlag = ({
   choice,
   choiceIdsSelected,
   currentIndex,
-  numOfIncorrectSelections,
   screenHeight,
   setChoiceIdsSelected,
   setCurrentIndex,
-  setNumOfIncorrectSelections,
+  updateNumOfIncorrectSelections,
 }) => {
   const playCorrectJingle = useSound(correctJingle)
   const playIncorrectJingle = useSound(incorrectJingle)
@@ -50,7 +49,7 @@ const OptionFlag = ({
       }, 1000)
     } else {
       playIncorrectJingle()
-      setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
+      updateNumOfIncorrectSelections()
     }
   }
 
