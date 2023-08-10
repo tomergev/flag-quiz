@@ -1,6 +1,5 @@
 import { useNavigation } from 'expo-router'
 import { 
-  BackHandler,
   Pressable,
   StyleSheet,
   useWindowDimensions,
@@ -30,15 +29,6 @@ const App = () => {
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const playMouseClick = useSound(clickMouse)  
-
-  // BackHandler.addEventListener(
-  //   'hardwareBackPress',
-  //   () => {
-  //     playMouseClick()
-  //     navigation.goBack()
-  //     return true
-  //   }
-  // )
 
   return <View style={{ flex: 1, paddingTop: insets.top }}>
     <View style={{ flex: 1, flexDirection: 'row' }}>

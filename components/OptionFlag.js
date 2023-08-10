@@ -16,7 +16,7 @@ const OptionFlag = ({
   screenHeight,
   setChoiceIdsSelected,
   setCurrentIndex,
-  updateNumOfIncorrectSelections,
+  updatenumIncorrectSelections,
 }) => {
   const playCorrectJingle = useSound(jingleCorrect)
   const playIncorrectJingle = useSound(jingleIncorrect)
@@ -50,7 +50,7 @@ const OptionFlag = ({
       }, 1200)
     } else {
       playIncorrectJingle()
-      updateNumOfIncorrectSelections()
+      updatenumIncorrectSelections()
     }
   }
 

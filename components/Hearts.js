@@ -4,26 +4,26 @@ import {
   View, 
 } from 'react-native'
 
-const Hearts = ({ numOfIncorrectSelections }) => {
+const Hearts = ({ numIncorrectSelections }) => {
   const { height: screenHeight } = useWindowDimensions()
   
   return (
     <View style={{ flexDirection: 'row-reverse' }}>
       <AntDesign 
         color='red' 
-        name={numOfIncorrectSelections <= 0 ? 'heart' : 'hearto'} 
+        name={numIncorrectSelections <= 0 ? 'heart' : 'hearto'} 
         size={18} 
         style={{ marginLeft: screenHeight / 350 }}
       />
       <AntDesign 
         color='red' 
-        name={numOfIncorrectSelections <= 1 ? 'heart' : 'hearto'}  
+        name={numIncorrectSelections <= 1 ? 'heart' : 'hearto'}  
         size={18} 
         style={{ marginLeft: screenHeight / 350 }}
       />
       <AntDesign 
         color='red' 
-        name={numOfIncorrectSelections <= 2 ? 'heart' : 'hearto'}  
+        name={numIncorrectSelections <= 2 ? 'heart' : 'hearto'}  
         size={18} 
       />
     </View>

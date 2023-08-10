@@ -2,6 +2,10 @@ import {
   useLocalSearchParams, 
   useNavigation,
 } from 'expo-router'
+import {
+  useEffect,
+  useState,
+} from 'react'
 import { 
   Image,
   Pressable,
@@ -16,12 +20,14 @@ import countries from '../countries'
 import { cardStyle } from '../styles'
 import useSound from '../hooks/useSound'
 import createQuiz from '../utils/createQuiz'
+import { getQuizResult } from '../utils/asyncStorage'
 
 const DashboardQuizes = () => {
   const { continent, label } = useLocalSearchParams() || {}
   const navigation = useNavigation()
   const playMouseClick = useSound(clickMouse)
   const insets = useSafeAreaInsets()
+  const [resultsQuiz, setResultsQuiz] = useState({})
   const { 
     height: screenHeight,
     width: screenWidth, 
@@ -32,6 +38,21 @@ const DashboardQuizes = () => {
     .sort(() => Math.random() - 0.5)
   const quiz = createQuiz(countriesFilteredByContinent)
 
+  useEffect(() => {
+    const getAllQuizResults = async () => await Promise.all([
+      getQuizResult(continent, 'countryNameQuiz'),
+      getQuizResult(continent, 'flagQuiz'),
+    ])
+
+    getAllQuizResults()
+      .then(([resultCountryNameQuiz, resultFlagQuiz]) => {
+        setResultsQuiz({
+          countryNameQuiz: resultCountryNameQuiz || {},
+          flagQuiz: resultFlagQuiz || {}
+        })
+      })
+  }, [])
+
   return (
     <View style={{ flex: 1, paddingTop: insets.top }}>
       <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>
@@ -39,7 +60,7 @@ const DashboardQuizes = () => {
       </Text>
       
       <Pressable
-        onPress={() => navigation.navigate('CountryNameQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPress={() => navigation.navigate('CountryNameQuiz', { continent, quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
         onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
@@ -69,13 +90,14 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Countries
+            4 Countries {'\n'}
+            Best: {resultsQuiz?.countryNameQuiz?.numCorrectSelections || 0}
           </Text>
         </View>
       </Pressable>
 
       <Pressable
-        onPress={() => navigation.navigate('FlagQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPress={() => navigation.navigate('FlagQuiz', { continent, quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
         onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
@@ -137,7 +159,8 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Flags
+            4 Flags {'\n'} 
+            Best: {resultsQuiz?.flagQuiz?.numCorrectSelections}
           </Text>
         </View>
       </Pressable>

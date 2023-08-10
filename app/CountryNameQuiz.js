@@ -11,22 +11,27 @@ import Hearts from '../components/Hearts'
 import OptionFlag from '../components/OptionCountryName'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
+import { storeQuizResult } from '../utils/asyncStorage'
 
 const CountryNameQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
-  const [numOfIncorrectSelections, setNumOfIncorrectSelections] = useState(0)
+  const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const params = useLocalSearchParams() || {}
   const quiz = JSON.parse(params.quiz || []) 
-  const isQuizDone = numOfIncorrectSelections >= 3 || quiz[currentIndex] === undefined
+  const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
-  const updateNumOfIncorrectSelections = () => {
-    if (numOfIncorrectSelections === 2) {
-      setTimeout(() => setNumOfIncorrectSelections(3), 1200)
+  if (isQuizDone) {
+    storeQuizResult(params.continent, 'countryNameQuiz', currentIndex, numIncorrectSelections)
+  }
+
+  const updatenumIncorrectSelections = () => {
+    if (numIncorrectSelections === 2) {
+      setTimeout(() => setNumIncorrectSelections(3), 1200)
     } else {
-      setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
+      setNumIncorrectSelections(numIncorrectSelections + 1)
     }
   }
 
@@ -39,7 +44,7 @@ const CountryNameQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectAnswers={currentIndex} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={currentIndex} /> : (
           <>
             <View 
               style={{ 
@@ -47,7 +52,7 @@ const CountryNameQuiz = () => {
                 justifyContent: 'center',
               }}
             >
-              <Hearts numOfIncorrectSelections={numOfIncorrectSelections} />
+              <Hearts numIncorrectSelections={numIncorrectSelections} />
               <Image             
                 resizeMode='center'
                 source={{ uri: quiz[currentIndex]?.answer?.flag }} 
@@ -65,7 +70,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -75,7 +80,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -87,7 +92,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -97,7 +102,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
               </View>
             </View>

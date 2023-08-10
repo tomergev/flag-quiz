@@ -11,23 +11,28 @@ import Hearts from '../components/Hearts'
 import OptionFlag from '../components/OptionFlag'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
+import { storeQuizResult } from '../utils/asyncStorage'
 
 const FlagQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
-  const [numOfIncorrectSelections, setNumOfIncorrectSelections] = useState(0)
+  const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const params = useLocalSearchParams() || {}
   const quiz = JSON.parse(params.quiz || []) 
-  const isQuizDone = numOfIncorrectSelections >= 3 || quiz[currentIndex] === undefined
+  const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
-  const updateNumOfIncorrectSelections = () => {
-    if (numOfIncorrectSelections === 2) {
-      setTimeout(() => setNumOfIncorrectSelections(3), 1000)
+  const updatenumIncorrectSelections = () => {
+    if (numIncorrectSelections === 2) {
+      setTimeout(() => setNumIncorrectSelections(3), 1000)
     } else {
-      setNumOfIncorrectSelections(numOfIncorrectSelections + 1)
+      setNumIncorrectSelections(numIncorrectSelections + 1)
     }
+  }
+
+  if (isQuizDone) {
+    storeQuizResult(params.continent, 'flagQuiz', currentIndex, numIncorrectSelections)
   }
 
   return (
@@ -38,10 +43,10 @@ const FlagQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectAnswers={currentIndex} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={currentIndex} /> : (
           <>
             <View style={{ flex: 2 }}>
-              <Hearts numOfIncorrectSelections={numOfIncorrectSelections} />
+              <Hearts numIncorrectSelections={numIncorrectSelections} />
               <View 
                 style={{ 
                   flex: 1, 
@@ -70,7 +75,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -80,7 +85,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -92,7 +97,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -102,7 +107,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updateNumOfIncorrectSelections={updateNumOfIncorrectSelections}
+                  updatenumIncorrectSelections={updatenumIncorrectSelections}
                 />
               </View>
             </View>

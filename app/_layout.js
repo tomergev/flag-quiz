@@ -34,7 +34,6 @@ const Layout = () => {
     )
   }
   
-  
   const theme = {
     ...DarkTheme,
     colors: {
