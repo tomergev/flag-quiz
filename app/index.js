@@ -1,5 +1,6 @@
 import { useNavigation } from 'expo-router'
 import { 
+  BackHandler,
   Pressable,
   StyleSheet,
   useWindowDimensions,
@@ -28,16 +29,23 @@ const App = () => {
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
-  const playMouseClick = useSound(clickMouse)
+  const playMouseClick = useSound(clickMouse)  
+
+  // BackHandler.addEventListener(
+  //   'hardwareBackPress',
+  //   () => {
+  //     playMouseClick()
+  //     navigation.goBack()
+  //     return true
+  //   }
+  // )
 
   return <View style={{ flex: 1, paddingTop: insets.top }}>
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'Oceania', label: 'Australia and Oceania' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Oceania', label: 'Australia and Oceania' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -51,10 +59,8 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'North America' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'North America' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -71,10 +77,8 @@ const App = () => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'Africa' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Africa' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -88,10 +92,8 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'South America' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'South America' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -108,10 +110,8 @@ const App = () => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'Asia' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Asia' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -125,10 +125,8 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => {
-          playMouseClick()
-          navigation.navigate('DashboardQuizes', { continent: 'Europe' })
-        }}
+        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Europe' })}
+        onPressOut={playMouseClick}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5

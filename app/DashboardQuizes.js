@@ -11,14 +11,17 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { cardStyle } from '../styles'
+import clickMouse from '../audio/clickMouse.mp3'
 import countries from '../countries'
+import { cardStyle } from '../styles'
+import useSound from '../hooks/useSound'
 import createQuiz from '../utils/createQuiz'
 
 const DashboardQuizes = () => {
   const { continent, label } = useLocalSearchParams() || {}
-  const insets = useSafeAreaInsets()
   const navigation = useNavigation()
+  const playMouseClick = useSound(clickMouse)
+  const insets = useSafeAreaInsets()
   const { 
     height: screenHeight,
     width: screenWidth, 
@@ -37,6 +40,7 @@ const DashboardQuizes = () => {
       
       <Pressable
         onPress={() => navigation.navigate('CountryNameQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
           flexDirection: 'row', 
@@ -72,6 +76,7 @@ const DashboardQuizes = () => {
 
       <Pressable
         onPress={() => navigation.navigate('FlagQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
           flexDirection: 'row', 

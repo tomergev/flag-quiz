@@ -1,17 +1,61 @@
-import { Slot } from 'expo-router'
 import { 
+  Stack, 
+  useNavigation, 
+} from 'expo-router'
+import { 
+  BackHandler,
+  Platform,
   StatusBar, 
-  View, 
 } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import {
+  DarkTheme,
+  ThemeProvider,
+} from "@react-navigation/native"
 
-const Layout = () => {
+import clickMouse from '../audio/clickMouse.mp3'
+import useSound from '../hooks/useSound'
+
+const Layout = () => {    
+  if (Platform.OS === 'android') {
+    const navigation = useNavigation()
+    const playMouseClick = useSound(clickMouse) 
+    BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        const { index } = navigation.getState() || {}
+        if (index === 0) BackHandler.exitApp()
+        else {
+          playMouseClick()
+          navigation.goBack()
+        }
+        return true
+      }
+    )
+  }
+  
+  
+  const theme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme,
+      background: '#343A40',
+    }
+  }
+  
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle='light-content' /> 
-      <View style={{ backgroundColor: '#343A40', flex: 1, padding: 5 }}>
-        <Slot />
-      </View>
+      <ThemeProvider value={theme}>
+        <StatusBar barStyle='light-content' /> 
+        <Stack 
+          screenOptions={{
+            animation: Platform.OS === 'ios' ? 'simple_push' : 'slide_from_right',
+            headerShown: false,  
+            presentation: 'card',
+          }}
+        />
+
+      </ThemeProvider>
     </SafeAreaProvider>
   )
 }
