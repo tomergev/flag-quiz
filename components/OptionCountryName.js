@@ -2,6 +2,8 @@ import {
   Pressable,
   Text,
 } from 'react-native'
+
+import { cardStyle } from '../styles'
 import correctJingle from '../audio/correct.mp3'
 import incorrectJingle from '../audio/incorrect.mp3'
 import useSound from '../hooks/useSound'
@@ -21,8 +23,7 @@ const OptionCountryName = ({
   
   const createStyle = ({ pressed }) => {
     const style = { 
-      backgroundColor: '#495057',
-      borderRadius: 10,
+      ...cardStyle,
       flex: 1, 
       justifyContent: 'center',
       margin: screenHeight / 200,

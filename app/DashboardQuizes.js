@@ -10,6 +10,8 @@ import {
   View, 
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { cardStyle } from '../styles'
 import countries from '../countries'
 import createQuiz from '../utils/createQuiz'
 
@@ -36,8 +38,7 @@ const DashboardQuizes = () => {
       <Pressable
         onPress={() => navigation.navigate('CountryNameQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
         style={{ 
-          backgroundColor: '#495057',
-          borderRadius: 10,
+          ...cardStyle,
           flexDirection: 'row', 
           height: screenHeight / 10,
           margin: screenHeight / 100,
@@ -72,8 +73,7 @@ const DashboardQuizes = () => {
       <Pressable
         onPress={() => navigation.navigate('FlagQuiz', { quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
         style={{ 
-          backgroundColor: '#495057', 
-          borderRadius: 10,
+          ...cardStyle,
           flexDirection: 'row', 
           height: screenHeight / 10,
           margin: screenHeight / 100,

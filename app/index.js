@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { cardStyle } from '../styles'
 import AfricaSvg from '../assets/africa.svg'
 import AsiaSvg from '../assets/asia.svg'
 import AustraliaSvg from '../assets/australia.svg' 
@@ -14,14 +15,11 @@ import EuropeSvg from '../assets/europe.svg'
 import NorthAmerica from '../assets/northAmerica.svg'
 import SouthAmerica from '../assets/southAmerica.svg'
 
-const styles = StyleSheet.create({
-  continent: {
-    alignItems: 'center',
-    backgroundColor: '#495057',
-    borderRadius: 10,
-    flex: 1,
-    justifyContent: 'center',
-  }
+const styleContinentCard = StyleSheet.create({
+  ...cardStyle,
+  alignItems: 'center',
+  flex: 1,
+  justifyContent: 'center',
 })
 
 const App = () => {
@@ -35,7 +33,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Oceania', label: 'Australia and Oceania' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}
@@ -49,7 +47,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'North America' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}
@@ -66,7 +64,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Africa' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}
@@ -80,7 +78,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'South America' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}
@@ -97,7 +95,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Asia' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}
@@ -111,7 +109,7 @@ const App = () => {
         android_ripple={{ borderless: false }}
         onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Europe' })}
         style={({ pressed }) => { 
-          const style = { ...styles.continent, margin: screenHeight / 200 }
+          const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
           return style
         }}

@@ -2,6 +2,8 @@ import {
   Image,
   Pressable,
 } from 'react-native'
+
+import { cardStyle } from '../styles'
 import correctJingle from '../audio/correct.mp3'
 import incorrectJingle from '../audio/incorrect.mp3'
 import useSound from '../hooks/useSound'
@@ -21,8 +23,7 @@ const OptionFlag = ({
   
   const createStyle = ({ pressed }) => {
     const style = { 
-      backgroundColor: '#495057',
-      borderRadius: 10,
+      ...cardStyle,
       flex: 1, 
       margin: screenHeight / 200,
     }
