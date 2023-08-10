@@ -4,8 +4,8 @@ import {
 } from 'react-native'
 
 import { cardStyle } from '../styles'
-import correctJingle from '../audio/correct.mp3'
-import incorrectJingle from '../audio/incorrect.mp3'
+import jingleCorrect from '../audio/jingleCorrect.mp3'
+import jingleIncorrect from '../audio/jingleIncorrect.mp3'
 import useSound from '../hooks/useSound'
 
 const OptionCountryName = ({ 
@@ -18,8 +18,8 @@ const OptionCountryName = ({
   setCurrentIndex,
   updateNumOfIncorrectSelections,
 }) => {
-  const playCorrectJingle = useSound(correctJingle)
-  const playIncorrectJingle = useSound(incorrectJingle)
+  const playCorrectJingle = useSound(jingleCorrect)
+  const playIncorrectJingle = useSound(jingleIncorrect)
   
   const createStyle = ({ pressed }) => {
     const style = { 

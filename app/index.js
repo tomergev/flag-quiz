@@ -7,13 +7,15 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { cardStyle } from '../styles'
 import AfricaSvg from '../assets/africa.svg'
 import AsiaSvg from '../assets/asia.svg'
 import AustraliaSvg from '../assets/australia.svg' 
 import EuropeSvg from '../assets/europe.svg'
 import NorthAmerica from '../assets/northAmerica.svg'
 import SouthAmerica from '../assets/southAmerica.svg'
+import useSound from '../hooks/useSound'
+import clickMouse from '../audio/clickMouse.mp3'
+import { cardStyle } from '../styles'
 
 const styleContinentCard = StyleSheet.create({
   ...cardStyle,
@@ -26,12 +28,16 @@ const App = () => {
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
+  const playMouseClick = useSound(clickMouse)
 
   return <View style={{ flex: 1, paddingTop: insets.top }}>
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Oceania', label: 'Australia and Oceania' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'Oceania', label: 'Australia and Oceania' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -45,7 +51,10 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'North America' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'North America' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -62,7 +71,10 @@ const App = () => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Africa' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'Africa' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -76,7 +88,10 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'South America' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'South America' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -93,7 +108,10 @@ const App = () => {
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Asia' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'Asia' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
@@ -107,7 +125,10 @@ const App = () => {
       </Pressable>
       <Pressable 
         android_ripple={{ borderless: false }}
-        onPress={() => navigation.navigate('DashboardQuizes', { continent: 'Europe' })}
+        onPress={() => {
+          playMouseClick()
+          navigation.navigate('DashboardQuizes', { continent: 'Europe' })
+        }}
         style={({ pressed }) => { 
           const style = { ...styleContinentCard, margin: screenHeight / 200 }
           if (pressed) style.opacity = 0.5
