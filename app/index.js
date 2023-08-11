@@ -6,7 +6,10 @@ import {
   View, 
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux' 
 
+import { getAllQuizResults } from '../api/resultsQuiz'
+import clickMouse from '../audio/clickMouse.mp3'
 import AfricaSvg from '../assets/africa.svg'
 import AsiaSvg from '../assets/asia.svg'
 import AustraliaSvg from '../assets/australia.svg' 
@@ -14,7 +17,7 @@ import EuropeSvg from '../assets/europe.svg'
 import NorthAmerica from '../assets/northAmerica.svg'
 import SouthAmerica from '../assets/southAmerica.svg'
 import useSound from '../hooks/useSound'
-import clickMouse from '../audio/clickMouse.mp3'
+import { setQuizResults } from '../reducers/resultsQuiz'
 import { cardStyle } from '../styles'
 
 const styleContinentCard = StyleSheet.create({
@@ -24,12 +27,18 @@ const styleContinentCard = StyleSheet.create({
   justifyContent: 'center',
 })
 
+const dispatchQuizResults = async (dispatch) => {
+  const allQuizResults = await getAllQuizResults()
+  dispatch(setQuizResults(allQuizResults))
+}
+
 const App = () => {
+  dispatchQuizResults(useDispatch())
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const playMouseClick = useSound(clickMouse)  
-
+  
   return <View style={{ flex: 1, paddingTop: insets.top }}>
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <Pressable

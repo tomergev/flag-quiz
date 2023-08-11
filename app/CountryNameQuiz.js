@@ -11,7 +11,7 @@ import Hearts from '../components/Hearts'
 import OptionFlag from '../components/OptionCountryName'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
-import { storeQuizResult } from '../utils/asyncStorage'
+import { storeQuizResult } from '../api/resultsQuiz'
 
 const CountryNameQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)

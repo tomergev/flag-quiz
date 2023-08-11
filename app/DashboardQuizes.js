@@ -2,10 +2,6 @@ import {
   useLocalSearchParams, 
   useNavigation,
 } from 'expo-router'
-import {
-  useEffect,
-  useState,
-} from 'react'
 import { 
   Image,
   Pressable,
@@ -14,20 +10,19 @@ import {
   View, 
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSelector } from 'react-redux'
 
 import clickMouse from '../audio/clickMouse.mp3'
 import countries from '../countries'
 import { cardStyle } from '../styles'
 import useSound from '../hooks/useSound'
 import createQuiz from '../utils/createQuiz'
-import { getQuizResult } from '../utils/asyncStorage'
 
 const DashboardQuizes = () => {
   const { continent, label } = useLocalSearchParams() || {}
   const navigation = useNavigation()
   const playMouseClick = useSound(clickMouse)
   const insets = useSafeAreaInsets()
-  const [resultsQuiz, setResultsQuiz] = useState({})
   const { 
     height: screenHeight,
     width: screenWidth, 
@@ -37,21 +32,6 @@ const DashboardQuizes = () => {
     .filter((country) => country.continents.includes(continent))
     .sort(() => Math.random() - 0.5)
   const quiz = createQuiz(countriesFilteredByContinent)
-
-  useEffect(() => {
-    const getAllQuizResults = async () => await Promise.all([
-      getQuizResult(continent, 'countryNameQuiz'),
-      getQuizResult(continent, 'flagQuiz'),
-    ])
-
-    getAllQuizResults()
-      .then(([resultCountryNameQuiz, resultFlagQuiz]) => {
-        setResultsQuiz({
-          countryNameQuiz: resultCountryNameQuiz || {},
-          flagQuiz: resultFlagQuiz || {}
-        })
-      })
-  }, [])
 
   return (
     <View style={{ flex: 1, paddingTop: insets.top }}>
@@ -90,8 +70,7 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Countries {'\n'}
-            Best: {resultsQuiz?.countryNameQuiz?.numCorrectSelections || 0}
+            4 Countries 
           </Text>
         </View>
       </Pressable>
@@ -159,8 +138,7 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Flags {'\n'} 
-            Best: {resultsQuiz?.flagQuiz?.numCorrectSelections}
+            4 Flags 
           </Text>
         </View>
       </Pressable>

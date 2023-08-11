@@ -12,27 +12,31 @@ import {
   DarkTheme,
   ThemeProvider,
 } from "@react-navigation/native"
+import { Provider } from 'react-redux'
 
 import clickMouse from '../audio/clickMouse.mp3'
 import useSound from '../hooks/useSound'
+import { store } from '../store'
+
+const handleBackClickAndroid = () => {
+  const navigation = useNavigation()
+  const playMouseClick = useSound(clickMouse) 
+  BackHandler.addEventListener(
+    'hardwareBackPress',
+    () => {
+      const { index: indexMainDashboard } = navigation.getState() || {}
+      if (indexMainDashboard === 0) BackHandler.exitApp()
+      else {
+        playMouseClick()
+        navigation.goBack()
+      }
+      return true
+    }
+  )
+}
 
 const Layout = () => {    
-  if (Platform.OS === 'android') {
-    const navigation = useNavigation()
-    const playMouseClick = useSound(clickMouse) 
-    BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        const { index } = navigation.getState() || {}
-        if (index === 0) BackHandler.exitApp()
-        else {
-          playMouseClick()
-          navigation.goBack()
-        }
-        return true
-      }
-    )
-  }
+  if (Platform.OS === 'android') handleBackClickAndroid()
   
   const theme = {
     ...DarkTheme,
@@ -46,14 +50,16 @@ const Layout = () => {
     <SafeAreaProvider>
       <ThemeProvider value={theme}>
         <StatusBar barStyle='light-content' /> 
-        <Stack 
-          screenOptions={{
-            animation: Platform.OS === 'ios' ? 'simple_push' : 'slide_from_right',
-            headerShown: false,  
-            presentation: 'card',
-          }}
-        />
+        <Provider store={store} >
+          <Stack 
+            screenOptions={{
+              animation: Platform.OS === 'ios' ? 'simple_push' : 'slide_from_right',
+              headerShown: false,  
+              presentation: 'card',
+            }}
+          />
 
+        </Provider>
       </ThemeProvider>
     </SafeAreaProvider>
   )
