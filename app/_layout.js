@@ -18,14 +18,15 @@ import clickMouse from '../audio/clickMouse.mp3'
 import useSound from '../hooks/useSound'
 import { store } from '../store'
 
+// TODO: Component not remounting on back https://stackoverflow.com/questions/34297540/are-components-re-mounted-when-back-buttoned-from-its-subsequent-screen-in-react
 const handleBackClickAndroid = () => {
   const navigation = useNavigation()
   const playMouseClick = useSound(clickMouse) 
   BackHandler.addEventListener(
     'hardwareBackPress',
     () => {
-      const { index: indexMainDashboard } = navigation.getState() || {}
-      if (indexMainDashboard === 0) BackHandler.exitApp()
+      const route = navigation.getCurrentRoute()
+      if (route.name === 'index') BackHandler.exitApp()
       else {
         playMouseClick()
         navigation.goBack()

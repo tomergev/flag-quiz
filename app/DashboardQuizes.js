@@ -79,7 +79,7 @@ const DashboardQuizes = () => {
             }}
           >
             4 Countries {'\n'} 
-            Best: {resultCountryNameQuiz.numCorrectSelections}
+            Best: {resultCountryNameQuiz.numCorrectSelections || 0}
           </Text>
         </View>
       </Pressable>
@@ -148,7 +148,7 @@ const DashboardQuizes = () => {
             }}
           >
             4 Flags {'\n'}
-            Best: {resultFlagQuiz.numCorrectSelections}
+            Best: {resultFlagQuiz.numCorrectSelections || 0}
           </Text>
         </View>
       </Pressable>
