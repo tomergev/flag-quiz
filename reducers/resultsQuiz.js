@@ -1,15 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 export const resultsQuizSlice = createSlice({
   name: 'resultsQuiz',
   initialState: [],
   reducers: { 
-    setQuizResults(state, { payload }) {
+    setQuizResults(_state, { payload }) {
       return payload
-      // console.log('state, payload', state, payload)
-      // state.resultsQuiz = payload
-      // console.log(state.resultsQuiz)
-      // return state.resultsQuiz
     },
     updateQuizResults(state, payload) {
       const index = state?.resultsQuiz?.findIndex((resultQuiz) => resultQuiz.id === payload.id)
@@ -20,5 +16,16 @@ export const resultsQuizSlice = createSlice({
 })
 
 export const { setQuizResults, updateQuizResults } = resultsQuizSlice.actions
+
+export const makeQuizResultSelectorByContinent = () => {
+  return createSelector(
+    [(state) => state.resultsQuiz, (_state, continent) => continent],
+    (resultsQuiz, continent) => {
+      const resultCountryNameQuiz = resultsQuiz.find(({ id }) => id === `${continent}-countryNameQuiz`)
+      const resultFlagQuiz = resultsQuiz.find(({ id }) => id === `${continent}-flagQuiz`)
+      return { resultCountryNameQuiz, resultFlagQuiz }
+    }
+  )
+}
 
 export default resultsQuizSlice.reducer

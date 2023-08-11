@@ -23,7 +23,7 @@ const FlagQuiz = () => {
   const quiz = JSON.parse(params.quiz || []) 
   const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
-  const updatenumIncorrectSelections = () => {
+  const updateNumIncorrectSelections = () => {
     if (numIncorrectSelections === 2) {
       setTimeout(() => setNumIncorrectSelections(3), 1000)
     } else {
@@ -75,7 +75,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -85,7 +85,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -97,7 +97,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -107,7 +107,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
             </View>

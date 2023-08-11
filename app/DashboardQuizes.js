@@ -2,6 +2,7 @@ import {
   useLocalSearchParams, 
   useNavigation,
 } from 'expo-router'
+import { useMemo } from 'react'
 import { 
   Image,
   Pressable,
@@ -16,6 +17,7 @@ import clickMouse from '../audio/clickMouse.mp3'
 import countries from '../countries'
 import { cardStyle } from '../styles'
 import useSound from '../hooks/useSound'
+import { makeQuizResultSelectorByContinent } from '../reducers/resultsQuiz'
 import createQuiz from '../utils/createQuiz'
 
 const DashboardQuizes = () => {
@@ -27,10 +29,16 @@ const DashboardQuizes = () => {
     height: screenHeight,
     width: screenWidth, 
   } = useWindowDimensions()
+  
+  const selectQuizResultByContinent = useMemo(makeQuizResultSelectorByContinent, [])
+  const { 
+    resultCountryNameQuiz, 
+    resultFlagQuiz, 
+  } = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
 
   const countriesFilteredByContinent = countries
     .filter((country) => country.continents.includes(continent))
-    .sort(() => Math.random() - 0.5)
+    .sort(() => Math.random() - 0.5) // Randomizing the order of countries. Inefficient, but does the job
   const quiz = createQuiz(countriesFilteredByContinent)
 
   return (
@@ -70,7 +78,8 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Countries 
+            4 Countries {'\n'} 
+            Best: {resultCountryNameQuiz.numCorrectSelections}
           </Text>
         </View>
       </Pressable>
@@ -138,7 +147,8 @@ const DashboardQuizes = () => {
               fontSize: 15, 
             }}
           >
-            4 Flags 
+            4 Flags {'\n'}
+            Best: {resultFlagQuiz.numCorrectSelections}
           </Text>
         </View>
       </Pressable>

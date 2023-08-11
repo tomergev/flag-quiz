@@ -16,7 +16,7 @@ const OptionCountryName = ({
   screenHeight,
   setChoiceIdsSelected,
   setCurrentIndex,
-  updatenumIncorrectSelections,
+  updateNumIncorrectSelections,
 }) => {
   const playCorrectJingle = useSound(jingleCorrect)
   const playIncorrectJingle = useSound(jingleIncorrect)
@@ -51,7 +51,7 @@ const OptionCountryName = ({
       }, 1200)
     } else {
       playIncorrectJingle()
-      updatenumIncorrectSelections()
+      updateNumIncorrectSelections()
     }
   }
 

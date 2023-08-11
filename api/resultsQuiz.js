@@ -1,4 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux'
+
+import { updateQuizResults } from '../reducers/resultsQuiz'
 
 const QUIZ_KEYS = [
   'Africa-flagQuiz',
@@ -24,19 +27,24 @@ export const getAllQuizResults = async () => {
   return allResultsQuiz  
 }
 
-export const storeQuizResult = async (group, quizType, numCorrectSelections, numIncorrectSelections) => {
-  const key = `${group}-${quizType}`
+export const storeQuizResult = async (continent, quizType, numCorrectSelections, numIncorrectSelections) => {
+  const key = `${continent}-${quizType}`
   const quizResultBest = JSON.parse(
     await AsyncStorage.getItem(key) 
   )
   
   if (quizResultBest === null || numCorrectSelections >= quizResultBest.numCorrectSelections) {
-    await AsyncStorage.setItem(key, JSON.stringify({
+    const resultQuiz = {
       id: key,
-      group,
+      group: continent,
       numCorrectSelections,
       numIncorrectSelections,
       timestamp: new Date().toISOString(),
-    }))
+      quizType,
+    }
+    await AsyncStorage.setItem(key, JSON.stringify(resultQuiz))
+    return resultQuiz
+    const dispatch = useDispatch()
+    dispatch(updateQuizResults(resultQuiz))
   }
 }

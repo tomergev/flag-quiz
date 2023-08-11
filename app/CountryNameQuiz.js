@@ -27,7 +27,7 @@ const CountryNameQuiz = () => {
     storeQuizResult(params.continent, 'countryNameQuiz', currentIndex, numIncorrectSelections)
   }
 
-  const updatenumIncorrectSelections = () => {
+  const updateNumIncorrectSelections = () => {
     if (numIncorrectSelections === 2) {
       setTimeout(() => setNumIncorrectSelections(3), 1200)
     } else {
@@ -70,7 +70,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -80,7 +80,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -92,7 +92,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
                   answer={quiz[currentIndex]?.answer}
@@ -102,7 +102,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
-                  updatenumIncorrectSelections={updatenumIncorrectSelections}
+                  updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
             </View>
