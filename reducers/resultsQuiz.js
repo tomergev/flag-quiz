@@ -21,9 +21,9 @@ export const makeQuizResultSelectorByContinent = () => {
   return createSelector(
     [(state) => state.resultsQuiz, (_state, continent) => continent],
     (resultsQuiz, continent) => {
-      const resultCountryNameQuiz = resultsQuiz.find(({ id }) => id === `${continent}-countryNameQuiz`)
-      const resultFlagQuiz = resultsQuiz.find(({ id }) => id === `${continent}-flagQuiz`)
-      return { resultCountryNameQuiz, resultFlagQuiz }
+      const countryName = resultsQuiz.find(({ id }) => id === `${continent}-countryNameQuiz`)
+      const flag = resultsQuiz.find(({ id }) => id === `${continent}-flagQuiz`)
+      return { countryName, flag }
     }
   )
 }

@@ -16,6 +16,7 @@ import { storeQuizResult } from '../api/resultsQuiz'
 const FlagQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
+  const [numCorrectSelections, setNumCorrectSelections] = useState(0)
   const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
@@ -32,7 +33,7 @@ const FlagQuiz = () => {
   }
 
   if (isQuizDone) {
-    storeQuizResult(params.continent, 'flagQuiz', currentIndex, numIncorrectSelections)
+    storeQuizResult(params.continent, 'flagQuiz', numCorrectSelections, numIncorrectSelections)
   }
 
   return (
@@ -43,7 +44,7 @@ const FlagQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectSelections={currentIndex} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} /> : (
           <>
             <View style={{ flex: 2 }}>
               <Hearts numIncorrectSelections={numIncorrectSelections} />
@@ -75,6 +76,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
@@ -85,6 +87,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
@@ -97,6 +100,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
                 <OptionFlag 
@@ -107,6 +111,7 @@ const FlagQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>

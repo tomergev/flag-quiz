@@ -15,10 +15,10 @@ import { useSelector } from 'react-redux'
 
 import clickMouse from '../audio/clickMouse.mp3'
 import countries from '../countries'
-import { cardStyle } from '../styles'
 import useSound from '../hooks/useSound'
-import { makeQuizResultSelectorByContinent } from '../reducers/resultsQuiz'
+import { cardStyle } from '../styles'
 import createQuiz from '../utils/createQuiz'
+import { makeQuizResultSelectorByContinent } from '../reducers/resultsQuiz'
 
 const DashboardQuizes = () => {
   const { continent, label } = useLocalSearchParams() || {}
@@ -29,12 +29,9 @@ const DashboardQuizes = () => {
     height: screenHeight,
     width: screenWidth, 
   } = useWindowDimensions()
-  
+
   const selectQuizResultByContinent = useMemo(makeQuizResultSelectorByContinent, [])
-  const { 
-    resultCountryNameQuiz, 
-    resultFlagQuiz, 
-  } = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
+  const resultsQuiz = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
 
   const countriesFilteredByContinent = countries
     .filter((country) => country.continents.includes(continent))
@@ -79,7 +76,7 @@ const DashboardQuizes = () => {
             }}
           >
             4 Countries {'\n'} 
-            Best: {resultCountryNameQuiz.numCorrectSelections || 0}
+            Best: {resultsQuiz?.countryName?.numCorrectSelections || 0}
           </Text>
         </View>
       </Pressable>
@@ -148,7 +145,7 @@ const DashboardQuizes = () => {
             }}
           >
             4 Flags {'\n'}
-            Best: {resultFlagQuiz.numCorrectSelections || 0}
+            Best: {resultsQuiz?.flag?.numCorrectSelections || 0}
           </Text>
         </View>
       </Pressable>

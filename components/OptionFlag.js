@@ -16,6 +16,7 @@ const OptionFlag = ({
   screenHeight,
   setChoiceIdsSelected,
   setCurrentIndex,
+  setNumCorrectSelections,
   updateNumIncorrectSelections,
 }) => {
   const playCorrectJingle = useSound(jingleCorrect)
@@ -44,6 +45,7 @@ const OptionFlag = ({
 
     if (choice?.id === answer?.id) {
       playCorrectJingle()
+      setNumCorrectSelections((numCorrectSelections) => numCorrectSelections + 1)
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1)
         setChoiceIdsSelected([])

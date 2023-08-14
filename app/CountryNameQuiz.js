@@ -8,7 +8,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import Hearts from '../components/Hearts'
-import OptionFlag from '../components/OptionCountryName'
+import OptionCountryName from '../components/OptionCountryName'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
 import { storeQuizResult } from '../api/resultsQuiz'
@@ -16,6 +16,7 @@ import { storeQuizResult } from '../api/resultsQuiz'
 const CountryNameQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
+  const [numCorrectSelections, setNumCorrectSelections] = useState(0)
   const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
@@ -24,7 +25,7 @@ const CountryNameQuiz = () => {
   const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
   if (isQuizDone) {
-    storeQuizResult(params.continent, 'countryNameQuiz', currentIndex, numIncorrectSelections)
+    storeQuizResult(params.continent, 'countryNameQuiz', numCorrectSelections, numIncorrectSelections)
   }
 
   const updateNumIncorrectSelections = () => {
@@ -44,7 +45,7 @@ const CountryNameQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectSelections={currentIndex} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} /> : (
           <>
             <View 
               style={{ 
@@ -62,7 +63,7 @@ const CountryNameQuiz = () => {
             </View>
             <View style={{ flex: 4 }}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-                <OptionFlag 
+                <OptionCountryName 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[0]}
                   choiceIdsSelected={choiceIdsSelected}
@@ -70,9 +71,10 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
-                <OptionFlag 
+                <OptionCountryName 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[1]}
                   choiceIdsSelected={choiceIdsSelected}
@@ -80,11 +82,12 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                <OptionFlag 
+                <OptionCountryName 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[2]}
                   choiceIdsSelected={choiceIdsSelected}
@@ -92,9 +95,10 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
-                <OptionFlag 
+                <OptionCountryName 
                   answer={quiz[currentIndex]?.answer}
                   choice={quiz[currentIndex]?.choices[3]}
                   choiceIdsSelected={choiceIdsSelected}
@@ -102,6 +106,7 @@ const CountryNameQuiz = () => {
                   screenHeight={screenHeight}
                   setChoiceIdsSelected={setChoiceIdsSelected}
                   setCurrentIndex={setCurrentIndex}
+                  setNumCorrectSelections={setNumCorrectSelections}
                   updateNumIncorrectSelections={updateNumIncorrectSelections}
                 />
               </View>
