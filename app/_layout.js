@@ -12,11 +12,9 @@ import {
   DarkTheme,
   ThemeProvider,
 } from "@react-navigation/native"
-import { Provider } from 'react-redux'
 
 import clickMouse from '../audio/clickMouse.mp3'
 import useSound from '../hooks/useSound'
-import { store } from '../store'
 
 const handleBackClickAndroid = () => {
   const navigation = useNavigation()
@@ -50,16 +48,13 @@ const Layout = () => {
     <SafeAreaProvider>
       <ThemeProvider value={theme}>
         <StatusBar barStyle='light-content' /> 
-        <Provider store={store} >
-          <Stack 
-            screenOptions={{
-              animation: Platform.OS === 'ios' ? 'simple_push' : 'slide_from_right',
-              headerShown: false,  
-              presentation: 'card',
-            }}
-          />
-
-        </Provider>
+        <Stack 
+          screenOptions={{
+            animation: Platform.OS === 'ios' ? 'simple_push' : 'slide_from_right',
+            headerShown: false,  
+            presentation: 'card',
+          }}
+        />
       </ThemeProvider>
     </SafeAreaProvider>
   )
