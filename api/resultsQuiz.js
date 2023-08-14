@@ -14,11 +14,26 @@ const QUIZ_KEYS = [
   'South America-flagQuiz',
   'South America-countryNameQuiz',
 ]
+const KEYS_GROUP_MAP = {
+  'Africa-flagQuiz': 'Africa',
+  'Africa-countryNameQuiz': 'Africa',
+  'Asia-flagQuiz': 'Asia',
+  'Asia-countryNameQuiz': 'Asia',
+  'Europe-flagQuiz': 'Europe',
+  'Europe-countryNameQuiz': 'Europe',
+  'North America-flagQuiz': 'North America',
+  'North America-countryNameQuiz': 'North America',
+  'Oceania-flagQuiz': 'Oceania',
+  'Oceania-countryNameQuiz': 'Oceania',
+  'South America-flagQuiz': 'South America',
+  'South America-countryNameQuiz': 'South America',
+}
 
 export const getAllQuizResults = async () => {
   const res = await AsyncStorage.multiGet(QUIZ_KEYS)
   const allResultsQuiz = res.map(([key, resultQuiz]) => ({
     id: key,
+    group: KEYS_GROUP_MAP[key],
     ...JSON.parse(resultQuiz || '{}'),
   }))
   return allResultsQuiz  
@@ -36,7 +51,9 @@ export const getContinentQuizResults = async (continent) => {
   return resultsQuizContinent  
 }
 
-export const storeQuizResult = async (continent, quizType, numCorrectSelections, numIncorrectSelections) => {
+export const removeAll = () => AsyncStorage.multiRemove(QUIZ_KEYS)
+
+export const storeQuizResult = async (continent, quizType, numCorrectSelections, numIncorrectSelections, numTotalQuestions) => {
   const key = `${continent}-${quizType}`
   const quizResultBest = JSON.parse(
     await AsyncStorage.getItem(key) 
@@ -44,10 +61,12 @@ export const storeQuizResult = async (continent, quizType, numCorrectSelections,
   
   if (quizResultBest === null || numCorrectSelections >= quizResultBest.numCorrectSelections) {
     const resultQuiz = {
-      id: key,
       group: continent,
+      id: key,
+      isAllQuestionsAnswered: numCorrectSelections === numTotalQuestions,
       numCorrectSelections,
       numIncorrectSelections,
+      numTotalQuestions,
       timestamp: new Date().toISOString(),
       quizType,
     }

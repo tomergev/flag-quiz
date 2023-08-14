@@ -25,7 +25,7 @@ const CountryNameQuiz = () => {
   const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
 
   if (isQuizDone) {
-    storeQuizResult(params.continent, 'countryNameQuiz', numCorrectSelections, numIncorrectSelections)
+    storeQuizResult(params.continent, 'countryNameQuiz', numCorrectSelections, numIncorrectSelections, quiz.length)
   }
 
   const updateNumIncorrectSelections = () => {

@@ -33,7 +33,7 @@ const FlagQuiz = () => {
   }
 
   if (isQuizDone) {
-    storeQuizResult(params.continent, 'flagQuiz', numCorrectSelections, numIncorrectSelections)
+    storeQuizResult(params.continent, 'flagQuiz', numCorrectSelections, numIncorrectSelections, quiz.length)
   }
 
   return (

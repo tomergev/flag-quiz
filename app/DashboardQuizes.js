@@ -5,7 +5,6 @@ import {
 } from 'expo-router'
 import { 
   useEffect, 
-  useMemo,
   useState, 
 } from 'react'
 import { 
@@ -17,7 +16,6 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useIsFocused } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
 
 import { getContinentQuizResults } from '../api/resultsQuiz'
 import clickMouse from '../audio/clickMouse.mp3'
@@ -25,7 +23,6 @@ import countries from '../countries'
 import useSound from '../hooks/useSound'
 import { cardStyle } from '../styles'
 import createQuiz from '../utils/createQuiz'
-import { makeQuizResultSelectorByContinent } from '../reducers/resultsQuiz'
 
 const DashboardQuizes = () => {
   const isFocused = useIsFocused()
@@ -39,8 +36,6 @@ const DashboardQuizes = () => {
     width: screenWidth, 
   } = useWindowDimensions()
 
-  // const selectQuizResultByContinent = useMemo(makeQuizResultSelectorByContinent, [])
-  // const resultsQuiz = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
   useEffect(() => {
     const updateResultsQuiz = async () => {
       const continentQuizResults = await getContinentQuizResults(continent)
