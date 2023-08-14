@@ -27,13 +27,13 @@ const styleContinentCard = StyleSheet.create({
   justifyContent: 'center',
 })
 
-const dispatchQuizResults = async (dispatch) => {
-  const allQuizResults = await getAllQuizResults()
-  dispatch(setQuizResults(allQuizResults))
-}
+// const dispatchQuizResults = async (dispatch) => {
+//   const allQuizResults = await getAllQuizResults()
+//   dispatch(setQuizResults(allQuizResults))
+// }
 
 const App = () => {
-  dispatchQuizResults(useDispatch())
+  // dispatchQuizResults(useDispatch())
   const navigation = useNavigation()
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()

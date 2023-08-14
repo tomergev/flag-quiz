@@ -1,8 +1,13 @@
+import { AntDesign } from '@expo/vector-icons'
 import { 
   useLocalSearchParams, 
   useNavigation,
 } from 'expo-router'
-import { useMemo } from 'react'
+import { 
+  useEffect, 
+  useMemo,
+  useState, 
+} from 'react'
 import { 
   Image,
   Pressable,
@@ -11,8 +16,10 @@ import {
   View, 
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useIsFocused } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
+import { getContinentQuizResults } from '../api/resultsQuiz'
 import clickMouse from '../audio/clickMouse.mp3'
 import countries from '../countries'
 import useSound from '../hooks/useSound'
@@ -21,17 +28,28 @@ import createQuiz from '../utils/createQuiz'
 import { makeQuizResultSelectorByContinent } from '../reducers/resultsQuiz'
 
 const DashboardQuizes = () => {
+  const isFocused = useIsFocused()
   const { continent, label } = useLocalSearchParams() || {}
   const navigation = useNavigation()
   const playMouseClick = useSound(clickMouse)
+  const [resultsQuiz, setResultsQuiz] = useState({})
   const insets = useSafeAreaInsets()
   const { 
     height: screenHeight,
     width: screenWidth, 
   } = useWindowDimensions()
 
-  const selectQuizResultByContinent = useMemo(makeQuizResultSelectorByContinent, [])
-  const resultsQuiz = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
+  // const selectQuizResultByContinent = useMemo(makeQuizResultSelectorByContinent, [])
+  // const resultsQuiz = useSelector((state) => selectQuizResultByContinent(state, continent)) || {}
+  useEffect(() => {
+    const updateResultsQuiz = async () => {
+      const continentQuizResults = await getContinentQuizResults(continent)
+      const countryName = continentQuizResults.find(({ id }) => id === `${continent}-countryNameQuiz`)
+      const flag = continentQuizResults.find(({ id }) => id === `${continent}-flagQuiz`)
+      setResultsQuiz({ countryName, flag })
+    }
+    if (isFocused) updateResultsQuiz()
+  }, [isFocused])
 
   const countriesFilteredByContinent = countries
     .filter((country) => country.continents.includes(continent))
@@ -45,7 +63,7 @@ const DashboardQuizes = () => {
       </Text>
       
       <Pressable
-        onPress={() => navigation.navigate('CountryNameQuiz', { continent, quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPress={() => navigation.navigate('CountryNameQuiz', { continent, quiz: JSON.stringify(quiz) })}
         onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
@@ -68,21 +86,38 @@ const DashboardQuizes = () => {
             justifyContent: 'center',
           }}
         >
-          <Text 
-            style={{ 
-              alignSelf: 'center',
-              color: 'white',
-              fontSize: 15, 
-            }}
-          >
-            4 Countries {'\n'} 
-            Best: {resultsQuiz?.countryName?.numCorrectSelections || 0}
-          </Text>
+          <View style={{ alignSelf: 'center' }}> 
+            <Text 
+              style={{ 
+                color: 'white',
+                fontSize: 15, 
+              }}
+            >
+              4 Countries
+            </Text>
+            <Text 
+              style={{ 
+                alignSelf: 'center', 
+                color: 'white',
+                fontSize: 12, 
+              }}
+            >
+              Best: {resultsQuiz?.countryName?.numCorrectSelections || 0}
+            </Text>
+          </View>
+        </View>
+        <View style={{ justifyContent: 'center' }}>
+          <AntDesign 
+            color='yellow' 
+            name={(resultsQuiz?.countryName?.numCorrectSelections / quiz.length) === 1 ? 'star' : 'staro'} 
+            size={24} 
+            style={{ marginRight: screenWidth / 100 }}
+          />
         </View>
       </Pressable>
 
       <Pressable
-        onPress={() => navigation.navigate('FlagQuiz', { continent, quiz: JSON.stringify([quiz[0], quiz[1], quiz[2]]) })}
+        onPress={() => navigation.navigate('FlagQuiz', { continent, quiz: JSON.stringify(quiz) })}
         onPressOut={playMouseClick}
         style={{ 
           ...cardStyle,
@@ -137,16 +172,33 @@ const DashboardQuizes = () => {
             justifyContent: 'center',
           }}
         >
-          <Text 
-            style={{ 
-              alignSelf: 'center',
-              color: 'white',
-              fontSize: 15, 
-            }}
-          >
-            4 Flags {'\n'}
-            Best: {resultsQuiz?.flag?.numCorrectSelections || 0}
-          </Text>
+          <View style={{ alignSelf: 'center' }}> 
+            <Text 
+              style={{ 
+                color: 'white',
+                fontSize: 15, 
+              }}
+            >
+              4 Flags
+            </Text>
+            <Text 
+              style={{ 
+                alignSelf: 'center', 
+                color: 'white',
+                fontSize: 12, 
+              }}
+            >
+              Best: {resultsQuiz?.flag?.numCorrectSelections || 0}
+            </Text>
+          </View>
+        </View>
+        <View style={{ justifyContent: 'center' }}>
+          <AntDesign 
+            color='yellow' 
+            name={(resultsQuiz?.flag?.numCorrectSelections / quiz.length) === 1 ? 'star' : 'staro'} 
+            size={24} 
+            style={{ marginRight: screenWidth / 100 }}
+          />
         </View>
       </Pressable>
     </View>
