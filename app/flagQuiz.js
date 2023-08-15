@@ -1,5 +1,8 @@
 import { useLocalSearchParams } from 'expo-router'
-import { useState } from 'react'
+import { 
+  useEffect,
+  useState, 
+} from 'react'
 import { 
   Text, 
   useWindowDimensions,
@@ -11,18 +14,31 @@ import Hearts from '../components/Hearts'
 import OptionFlag from '../components/OptionFlag'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
-import { storeQuizResult } from '../api/resultsQuiz'
+import { 
+  getQuizResult, 
+  storeQuizResult, 
+} from '../api/resultsQuiz'
 
 const FlagQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
   const [numCorrectSelections, setNumCorrectSelections] = useState(0)
   const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
+  const [resultQuiz, setResultQuiz] = useState({})
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const params = useLocalSearchParams() || {}
+  const { continent } = params
   const quiz = JSON.parse(params.quiz || []) 
   const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
+
+  useEffect(() => {
+    const updateResultQuiz = async () => {
+      const resultQuiz = await getQuizResult(`${continent}-flagQuiz`)
+      setResultQuiz(resultQuiz || {})
+    }
+    updateResultQuiz()
+  }, [])
 
   const updateNumIncorrectSelections = () => {
     if (numIncorrectSelections === 2) {
@@ -44,7 +60,7 @@ const FlagQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} resultQuiz={resultQuiz} /> : (
           <>
             <View style={{ flex: 2 }}>
               <Hearts numIncorrectSelections={numIncorrectSelections} />

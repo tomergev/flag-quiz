@@ -51,6 +51,14 @@ export const getContinentQuizResults = async (continent) => {
   return resultsQuizContinent  
 }
 
+export const getQuizResult = async (key) => {
+  const res = await AsyncStorage.getItem(key)
+  const quizResult = JSON.parse(
+    res || '{}'
+  )
+  return quizResult
+}
+
 export const removeAll = () => AsyncStorage.multiRemove(QUIZ_KEYS)
 
 export const storeQuizResult = async (continent, quizType, numCorrectSelections, numIncorrectSelections, numTotalQuestions) => {

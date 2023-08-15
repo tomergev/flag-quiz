@@ -4,7 +4,30 @@
     "web": {
       "bundler": "metro"
     },
+    "splash": {
+      "backgroundColor": "#343A40",
+      "image": "./assets/globe.png",
+      "resizeMode": "contain"
+    },
     "name": "flag-quiz-2.0",
-    "slug": "flag-quiz-2.0"
+    "slug": "flag-quiz",
+    "extra": {
+      "eas": {
+        "projectId": "51bbc39e-5867-437b-b93a-b880b82bb74d"
+      }
+    },
+    "owner": "tomergev",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/51bbc39e-5867-437b-b93a-b880b82bb74d"
+    },
+    "android": {
+      "package": "com.tomergev.flagquiz"
+    },
+    "ios": {
+      "bundleIdentifier": "com.tomergev.flagquiz"
+    }
   }
 }

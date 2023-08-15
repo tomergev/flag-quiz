@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const ResultQuiz = ({ numCorrectSelections } = {}) => {
+const ResultQuiz = ({ numCorrectSelections, resultQuiz } = {}) => {
   return (
     <View
       style={{ 
@@ -29,7 +29,7 @@ const ResultQuiz = ({ numCorrectSelections } = {}) => {
           Result: {numCorrectSelections}
         </Text>
         <Text style={styles.text}>
-          Best: (Feature coming soon)
+          Best: {resultQuiz.numCorrectSelections || 0}
         </Text>
       </View>
     </View>
