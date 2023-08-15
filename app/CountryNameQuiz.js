@@ -1,5 +1,8 @@
 import { useLocalSearchParams } from 'expo-router'
-import { useState } from 'react'
+import { 
+  useEffect,
+  useState, 
+} from 'react'
 import { 
   Image,
   View, 
@@ -11,18 +14,31 @@ import Hearts from '../components/Hearts'
 import OptionCountryName from '../components/OptionCountryName'
 import ProgressBar from '../components/ProgressBar'
 import ResultQuiz from '../components/ResultQuiz' 
-import { storeQuizResult } from '../api/resultsQuiz'
+import { 
+  getQuizResult, 
+  storeQuizResult, 
+} from '../api/resultsQuiz'
 
 const CountryNameQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [choiceIdsSelected, setChoiceIdsSelected] = useState([])
   const [numCorrectSelections, setNumCorrectSelections] = useState(0)
   const [numIncorrectSelections, setNumIncorrectSelections] = useState(0)
+  const [resultQuiz, setResultQuiz] = useState({})
   const insets = useSafeAreaInsets()
   const { height: screenHeight } = useWindowDimensions()
   const params = useLocalSearchParams() || {}
+  const { continent } = params
   const quiz = JSON.parse(params.quiz || []) 
   const isQuizDone = numIncorrectSelections >= 3 || quiz[currentIndex] === undefined
+
+  useEffect(() => {
+    const updateResultQuiz = async () => {
+      const resultQuiz = await getQuizResult(`${continent}-countryNameQuiz`)
+      setResultQuiz(resultQuiz || {})
+    }
+    updateResultQuiz()
+  }, [])
 
   if (isQuizDone) {
     storeQuizResult(params.continent, 'countryNameQuiz', numCorrectSelections, numIncorrectSelections, quiz.length)
@@ -45,7 +61,7 @@ const CountryNameQuiz = () => {
       }}
     >
       {
-        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} /> : (
+        isQuizDone ? <ResultQuiz numCorrectSelections={numCorrectSelections} resultQuiz={resultQuiz} /> : (
           <>
             <View 
               style={{ 
